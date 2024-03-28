@@ -49,6 +49,7 @@
     
     chezmoi
     git
+    git-lfs
     wget
     gnupg
     

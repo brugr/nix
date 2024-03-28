@@ -54,8 +54,6 @@
     
     distrobox
     
-    gedit
-
     flatpak-builder
 
     mangohud

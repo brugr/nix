@@ -30,6 +30,9 @@
   services = {
     pcscd.enable = true;
   };
+
+  # enable v4l2loopback (for obs)
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
   
   # fix nvidia for coolercontrol
   systemd.services.coolercontrold.path = [
@@ -63,5 +66,14 @@
     papirus-icon-theme
     adw-gtk3
     
+    android-tools
+    vscode
+
+    obs-studio
+  ]) ++ (with pkgs.obs-studio-plugins; [
+    obs-vkcapture
+    obs-gstreamer
+    obs-vaapi
+    obs-pipewire-audio-capture
   ]);
 }

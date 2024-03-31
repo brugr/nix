@@ -11,8 +11,6 @@
 
   services.switcherooControl.enable = true;
 
-  systemd.services.systemd-udev-trigger.restartIfChanged = false;
-
   hardware.opengl = {
 	enable = true;
 	driSupport = true;
@@ -40,6 +38,27 @@
   	intelBusId = "PCI:7:0:0";
   	nvidiaBusId = "PCI:1:0:0";
 	};
+  };
+  systemd = {
+    services.systemd-udev-trigger.restartIfChanged = false;
+    timers."nvidia-tdp" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "5";
+        Unit = "nvidia-tdp.service";
+      };
+    };
+    services."nvidia-tdp" = {
+      path = [
+        config.boot.kernelPackages.nvidia_x11
+        config.boot.kernelPackages.nvidia_x11.settings
+      ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStartPre = "/usr/bin/env nvidia-smi -pm 1";
+        ExecStart = "/usr/bin/env nvidia-smi -pl 500";
+      };
+    };
   };
 }
 

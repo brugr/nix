@@ -2,7 +2,6 @@
 {
   networking = {
     networkmanager.enable = true; # enable networkmanager
-    enableIPv6 = false; # disable ipv6
   };
   
   # enable tcp_bbr

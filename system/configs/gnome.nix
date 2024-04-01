@@ -22,11 +22,11 @@
     appindicator
   ]);
 
-  # add blackbox term to nautilus
-  programs.nautilus-open-any-terminal = {
-    enable = true;
-    terminal = "gnome-terminal";
-  };
+  # nautilus open any terminal
+  #programs.nautilus-open-any-terminal = {
+  #  enable = true;
+  #  terminal = "gnome-terminal";
+  #};
 
   # remove unwanted packages
   environment.gnome.excludePackages = (with pkgs; [

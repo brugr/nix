@@ -10,10 +10,10 @@
   # install packages
   environment.systemPackages = (with pkgs; [
     kdePackages.ocean-sound-theme
-    blackbox-terminal
   ]) ++ (with pkgs.gnome; [
     gnome-tweaks
     nautilus-python
+    gnome-terminal
   ]) ++ (with pkgs.gnomeExtensions; [
     # gnome extensions
     gsconnect
@@ -25,7 +25,7 @@
   # add blackbox term to nautilus
   programs.nautilus-open-any-terminal = {
     enable = true;
-    terminal = "blackbox";
+    terminal = "gnome-terminal";
   };
 
   # remove unwanted packages

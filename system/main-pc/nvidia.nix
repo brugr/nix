@@ -56,7 +56,7 @@
       serviceConfig = {
         Type = "oneshot";
         ExecStartPre = "/usr/bin/env nvidia-smi -pm 1";
-        ExecStart = "/usr/bin/env nvidia-smi -pl 500";
+        ExecStart = "/usr/bin/env nvidia-smi -pl 450";
       };
     };
   };

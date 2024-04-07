@@ -14,21 +14,21 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/488c88fd-305e-4276-8978-81e51e338146";
+    { device = "/dev/disk/by-uuid/75f6dd4f-4b86-4cb2-8e06-a6fe7504b939";
       fsType = "btrfs";
-      options = [ "subvol=@" "ssd" "noatime" "compress=zstd:1" ];
+      options = [ "subvol=@" "ssd" "compress=zstd:1" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/8CD0-5A51";
+      fsType = "vfat";
+      options = [ "umask=0077" ];
     };
 
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/5d2cc896-d57e-4f0e-ae3a-c22ad48eb565";
       fsType = "btrfs";
-      options = [ "subvol=@home" "ssd" "noatime" "compress=zstd:1" ];
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FABA-1BDE";
-      fsType = "vfat";
-      options = [ "umask=0077" ];
+      options = [ "subvol=@home" "ssd" "compress=zstd:1" ];
     };
 
   swapDevices = [ ];

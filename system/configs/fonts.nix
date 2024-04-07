@@ -10,4 +10,5 @@
     fira-mono
     liberation_ttf
   ]);
+  fonts.fontconfig.defaultFonts.emoji = [ "Twitter Color Emoji" ];
 }

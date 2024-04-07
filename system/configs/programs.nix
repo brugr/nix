@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   # enable flatpak  
   services.flatpak.enable = true;
@@ -13,18 +13,20 @@
     magicOrExtension = ''\x7fELF....AI\x02'';
   };
 
-  # enable podman and nvidia support
+  # enable podman
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
   };
-  virtualisation.containers.cdi.dynamic.nvidia.enable = true;
 
+  # enable qemu/libvirtd
+  virtualisation.libvirtd.enable = true;
   
   programs = {
     autojump.enable = true;
     coolercontrol.enable = true;
     steam.enable = true;
+    virt-manager.enable = true;
   };
 
   services = {
@@ -41,6 +43,10 @@
     config.boot.kernelPackages.nvidia_x11.settings
   ];
 
+  systemd.tmpfiles.rules = [
+    "f /dev/shm/looking-glass 0660 kevin libvirtd -"
+  ];
+
   environment.systemPackages = (with pkgs; [
     nvtopPackages.full
     btop
@@ -49,6 +55,9 @@
     intel-media-driver
     
     vesktop
+    bitwarden
+    yubioath-flutter
+    looking-glass-client
     
     chezmoi
     git

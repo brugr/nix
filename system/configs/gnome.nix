@@ -7,6 +7,12 @@
     desktopManager.gnome.enable = true;
   };
 
+  # enable gsconnect
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
+
   # install packages
   environment.systemPackages = (with pkgs; [
     kdePackages.ocean-sound-theme
@@ -16,7 +22,6 @@
     gnome-terminal
   ]) ++ (with pkgs.gnomeExtensions; [
     # gnome extensions
-    gsconnect
     pano
     pop-shell
     appindicator

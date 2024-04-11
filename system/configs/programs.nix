@@ -71,6 +71,7 @@
 
     mangohud
     gamescope
+    r2modman
     
     papirus-icon-theme
     adw-gtk3

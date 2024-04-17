@@ -4,13 +4,9 @@
   services.flatpak.enable = true;
   
   # autodetect appimages and run them with appimage-run
-  boot.binfmt.registrations.appimage = {
-    wrapInterpreterInShell = false;
-    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-    recognitionType = "magic";
-    offset = 0;
-    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-    magicOrExtension = ''\x7fELF....AI\x02'';
+  programs.appimage = {
+    enable = true;
+    binfmt  = true;
   };
 
   # enable podman
@@ -21,38 +17,35 @@
 
   # enable qemu/libvirtd
   virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  systemd.tmpfiles.rules = [
+    "f /dev/shm/looking-glass 0660 kevin libvirtd -"
+  ];
   
   programs = {
     autojump.enable = true;
-    coolercontrol.enable = true;
-    steam.enable = true;
-    virt-manager.enable = true;
   };
 
   services = {
     pcscd.enable = true;
+    system76-scheduler.enable = true;
   };
 
-  # enable v4l2loopback (for obs)
-  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
-  
-  # fix nvidia for coolercontrol
-  systemd.services.coolercontrold.path = [
-    pkgs.bash
-    config.boot.kernelPackages.nvidia_x11
-    config.boot.kernelPackages.nvidia_x11.settings
-  ];
-
-  systemd.tmpfiles.rules = [
-    "f /dev/shm/looking-glass 0660 kevin libvirtd -"
-  ];
+  services.system76-scheduler.assignments = {
+    easyeffects = {
+      nice = -15;
+      class = "fifo";
+      prio = 49;
+      ioClass = "realtime";
+      ioPrio = 0;
+      matchers = [ "/app/bin/easyeffects" ];
+    };
+  };
 
   environment.systemPackages = (with pkgs; [
     nvtopPackages.full
     btop
     topgrade
-    
-    intel-media-driver
     
     vesktop
     bitwarden
@@ -68,10 +61,6 @@
     distrobox
     
     flatpak-builder
-
-    mangohud
-    gamescope
-    r2modman
     
     papirus-icon-theme
     adw-gtk3
@@ -86,4 +75,7 @@
     obs-vaapi
     obs-pipewire-audio-capture
   ]);
+
+  # enable v4l2loopback (for obs)
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 }
